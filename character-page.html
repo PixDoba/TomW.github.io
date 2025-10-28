@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Character — [NAME]</title>
+  <style>
+    :root{
+      --bg:#f7f8fb;
+      --card:#ffffff;
+      --accent:#3a86ff;
+      --muted:#6b7280;
+      --radius:12px;
+      --maxw:900px;
+    }
+    body{
+      margin:0;
+      font-family:Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      background:linear-gradient(180deg,#eef2ff 0%,var(--bg) 100%);
+      color:#111827;
+      display:flex;
+      justify-content:center;
+      padding:28px;
+    }
+    .wrap{
+      width:100%;
+      max-width:var(--maxw);
+      box-sizing:border-box;
+    }
+    header{
+      display:flex;
+      gap:18px;
+      align-items:center;
+      margin-bottom:18px;
+    }
+    .avatar{
+      width:96px;
+      height:96px;
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow: 0 6px 24px rgba(20,20,40,0.07);
+      flex:0 0 96px;
+    }
+    .avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
+    h1{ margin:0; font-size:1.4rem; }
+    p.lead{ margin:4px 0 0; color:var(--muted); font-size:0.95rem; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:18px;
+    }
+
+    @media(min-width:880px){
+      .grid{ grid-template-columns: 1fr 1fr; }
+      .big{ grid-column:1 / -1; }
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow: 0 6px 18px rgba(20,20,40,0.04);
+    }
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:10px;
+    }
+    .tag{
+      background:linear-gradient(90deg,var(--accent),#7f5cff);
+      color:white;
+      font-weight:600;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:0.8rem;
+    }
+
+    ul.facts{ margin:0; padding-left:18px; color:var(--muted); }
+    ul.facts li{ margin-bottom:8px; }
+
+    .ask-row{ display:flex; gap:8px; align-items:center; }
+    input.word{
+      flex:1;
+      padding:10px 12px;
+      border-radius:10px;
+      border:1px solid #e6e9ef;
+      font-size:0.95rem;
+      outline:none;
+    }
+    button.go{
+      background:var(--accent);
+      color:white;
+      border:none;
+      padding:10px 14px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:600;
+    }
+    .answer{
+      margin-top:12px;
+      padding:12px;
+      border-radius:10px;
+      background:#fbfdff;
+      border:1px solid #eef3ff;
+      min-height:48px;
+    }
+    .meta{
+      margin-top:8px;
+      color:var(--muted);
+      font-size:0.85rem;
+    }
+
+    footer.small{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:0.82rem;
+      text-align:center;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="avatar">
+        <!-- Replace the src with your character's avatar -->
+        <img id="avatarImg" src="https://via.placeholder.com/256x256.png?text=Avatar" alt="[NAME] avatar" />
+      </div>
+      <div>
+        <h1 id="charName">[NAME]</h1>
+        <p class="lead" id="charOneLiner">A one-line descriptor for your character. Replace this with personality summary.</p>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="card big" id="aboutCard">
+        <div class="section-title">
+          <div class="tag">About me</div>
+        </div>
+        <div id="aboutText">
+          <p>
+            Replace this paragraph with a longer "About me" for the character. Include background, personality, goals, and any other core details you want visitors to read.
+          </p>
+        </div>
+      </section>
+
+      <section class="card" id="factsCard">
+        <div class="section-title">
+          <div class="tag">Fun facts</div>
+        </div>
+        <ul class="facts" id="funFactsList">
+          <li>Favorite food: Add item</li>
+          <li>Strangest fear: Add item</li>
+          <li>Secret hobby: Add item</li>
+        </ul>
+      </section>
+
+      <section class="card" id="askCard">
+        <div class="section-title">
+          <div class="tag">Ask a word</div>
+        </div>
+
+        <div>
+          <div class="ask-row">
+            <input class="word" id="wordInput" placeholder="Type a word (e.g., moon, cake, duty)" />
+            <button class="go" id="askBtn">Ask</button>
+          </div>
+
+          <div class="answer" id="answerBox">Type a word above and press Ask — [NAME] will respond.</div>
+
+          <div class="meta">Tip: Try nouns, feelings, places or names. The character answers with a small, character-voiced reply.</div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="small">
+      This is a template page. To customize content, open this file and replace placeholders. Ask me to push this into your repository if you'd like.
+    </footer>
+  </div>
+
+  <script>
+    // --- Customize these defaults for your character ---
+    const characterName = "[NAME]"; // replace with the character's real name
+    const oneLiner = "Curious wanderer, collector of small mysteries.";
+    const about = `Write a paragraph or two about the character here. Where do they come from? What drives them? Mention quirks, relationships, and goals.`;
+    const funFacts = [
+      "Collects mismatched socks from travels",
+      "Has a small tattoo of a compass behind the left ear",
+      "Never turns down a slice of lemon pie"
+    ];
+    // Optional: replace placeholder avatar URL with your asset path:
+    const avatarUrl = "https://via.placeholder.com/256x256.png?text=Avatar";
+
+    // --- Keyword map: add any keyword -> custom reply here ---
+    const keywordReplies = {
+      "moon": "The moon makes them nostalgic — it smells like old books and sea breeze to them.",
+      "cake": "They'll trade three secrets for a slice of cake. Don't test them.",
+      "duty": "Duty is a heavy coat they wear to keep others warm. They resent how it can be too tight.",
+      "home": "Home, to them, is less a place and more the people who laugh while the rain taps the window.",
+      "fear": "They're most afraid of being forgotten, so they leave small notes in books they lend."
+    };
+
+    // Templates for fallback answers
+    const adjectives = ["wistful","curious","mischievous","practical","sincere","playful"];
+    const memories = [
+      "a rainy afternoon and warm tea",
+      "a small back-alley market stall full of smells",
+      "the sound of someone whistling with the wrong rhythm",
+      "a quiet rooftop under a harvest moon",
+      "the smell of frying onions at dawn"
+    ];
+
+    // --- DOM wiring & logic ---
+    (function init(){
+      document.getElementById('charName').textContent = characterName;
+      document.getElementById('charOneLiner').textContent = oneLiner;
+      document.getElementById('aboutText').innerHTML = `<p>${about}</p>`;
+      document.getElementById('avatarImg').src = avatarUrl;
+
+      const ul = document.getElementById('funFactsList');
+      ul.innerHTML = "";
+      funFacts.forEach(f => {
+        const li = document.createElement('li');
+        li.textContent = f;
+        ul.appendChild(li);
+      });
+
+      const btn = document.getElementById('askBtn');
+      const input = document.getElementById('wordInput');
+      btn.addEventListener('click', () => askWord(input.value));
+      input.addEventListener('keydown', (e) => { if(e.key === 'Enter') askWord(input.value); });
+    })();
+
+    function askWord(raw){
+      const w = (raw || "").trim().toLowerCase();
+      const out = document.getElementById('answerBox');
+      if(!w){
+        out.textContent = `${characterName} tilts their head and waits for a word.`;
+        return;
+      }
+
+      // Exact keyword match
+      if(keywordReplies[w]){
+        out.textContent = `${characterName} — "${keywordReplies[w]}"`;
+        return;
+      }
+
+      // Partial/contains match
+      for(const k in keywordReplies){
+        if(w.includes(k)){
+          out.textContent = `${characterName} — "${keywordReplies[k]}"`;
+          return;
+        }
+      }
+
+      // Fallback: generate a short character-styled response
+      const adj = adjectives[Math.floor(Math.random()*adjectives.length)];
+      const mem = memories[Math.floor(Math.random()*memories.length)];
+      const templates = [
+        `${characterName} thinks of "${raw}" and feels ${adj}. It reminds them of ${mem}.`,
+        `"${raw}"? That word makes ${characterName} grin faintly—a memory of ${mem} springs up.`,
+        `${characterName} says: "Ah, ${raw}. It always smells faintly like ${mem} to me."
+      ];
+      const reply = templates[Math.floor(Math.random()*templates.length)];
+      out.textContent = reply;
+    }
+  </script>
+</body>
+</html>
